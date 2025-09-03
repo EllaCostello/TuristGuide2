@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>TouristGuide KBH</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
 
 <body>
 <nav>
-    <a href="http://localhost:8080/attractions">
+
+
+    <a th:href="@{/attractions}">
         <button class="button1">Attractions</button>
     </a>
     <a href="#section2">
@@ -24,13 +26,13 @@
 
 
 <section class="section1">
-    <img class="kommune" src="../images/københavnkommune-removebg-preview.png">
+    <img class="kommune" th:src="@{/images/københavnkommune-removebg-preview.png}">
     <div class="header1andtext">  <h1>Touristguide</h1>
         <p class="headerKøbenhavn">København</p></div>
 
 
 
-    <img class="backgroundImage" src="../images/københavn.jpg">
+    <img class="backgroundImage" th:src="@{/images/københavn.jpg}" alt="København">
 
     <div class="box1"></div>
     <div class="box2"></div>
@@ -66,17 +68,17 @@
             <li>
                 <a href="http://localhost:8080/attractions/Den Lille Havfrue">Den Lille Havfrue</a>
                 <a class="moreInformation" href="https://www.visitcopenhagen.dk/koebenhavn/planlaeg-din-tur/den-lille-havfrue-gdk586951"> More Information</a>
-                <a href="http://localhost:8080/attractions/Den Lille Havfrue"><img class="attractionImage" src="../images/lillehavfrue.jpg"></a>
+                <a href="http://localhost:8080/attractions/Den Lille Havfrue"><img class="attractionImage" th:src="@{images/lillehavfrue.jpg}"></a>
             </li>
             <li>
                 <a href="http://localhost:8080/attractions/Tivoli">Tivoli</a>
                 <a class="moreInformation" href="https://www.tivoli.dk/aabningstider-og-saesoner/sommer-i-tivoli"> More Information</a>
-                <a href="http://localhost:8080/attractions/Tivoli"><img class="attractionImage" src="tivoli.jpg"></a>
+                <a href="http://localhost:8080/attractions/Tivoli"><img class="attractionImage" th:src="@{images/tivoli.jpg}"></a>
             </li>
             <li>
                 <a href="http://localhost:8080/attractions/Operaen">Operaen</a>
                 <a class="moreInformation" href="https://kglteater.dk/?gad_source=1&gad_campaignid=353100040&gclid=Cj0KCQjwn8XFBhCxARIsAMyH8Bs9B9jVPxLM1j0qp5--1pW-diX_dwtXMLmd1vDJntWopSsJCAEk-rAaAv8nEALw_wcB"> More Information</a>
-                <a href="http://localhost:8080/attractions/Operaen"><img class="attractionImage" src="operaen.jpg"></a>
+                <a href="http://localhost:8080/attractions/Operaen"><img class="attractionImage" th:src="@{images/operaen.jpg}"></a>
             </li>
         </ul>
 

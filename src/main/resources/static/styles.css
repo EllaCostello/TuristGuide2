@@ -57,7 +57,7 @@ body {
     color: white;
 }
 .button1:hover {
-    color: #494990;
+    color: #015696;
     cursor: pointer;
 }
 .header1andtext {
@@ -152,12 +152,12 @@ a {
     font-size: 25px;
 }
 a:hover {
-    color: #494990;
+    color: #015696;
     cursor: pointer;
 }
 
 .moreInformation {
-    color: #494990;
+    color: #015696;
 }
 .attractionImage {
     max-width: 400px;
@@ -174,7 +174,7 @@ footer {
     left: 0;
     right: 0;
     text-align: center;
-    background-color: #494990;
+    background-color: #015696;
     color: white;
     padding: 1em 0;
 }
