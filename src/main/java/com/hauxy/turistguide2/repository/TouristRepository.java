@@ -16,9 +16,15 @@ public class TouristRepository {
     }
 
     public void populateTouristAttraction() {
-        attractions.add(new TouristAttraction("Tivoli", "Verdens ældste tivoli"));
-        attractions.add(new TouristAttraction("Den Lille Havfrue", "Verdens ældste havfrue"));
-        attractions.add(new TouristAttraction("Operaen", "Verdens ældste opera"));
+        ArrayList<Tag> tag1 = new ArrayList<>();
+        tag1.add(Tag.NATUR);
+        tag1.add(Tag.BØRNEVENLIG);
+        tag1.add(Tag.GRATIS);
+
+
+        attractions.add(new TouristAttraction("Tivoli", "Verdens ældste tivoli", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
+        attractions.add(new TouristAttraction("Den Lille Havfrue", "Verdens ældste havfrue", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
+        attractions.add(new TouristAttraction("Operaen", "Verdens ældste opera", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
 
 
     }
@@ -49,8 +55,8 @@ public class TouristRepository {
     }
 
     public List getTags() {
-        ArrayList<Tags> tagsList = new ArrayList<>(Arrays.asList(Tags.values()));
-            return tagsList;
+        ArrayList<Tag> tagList = new ArrayList<>(Arrays.asList(Tag.values()));
+            return tagList;
     }
 
 

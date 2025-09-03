@@ -5,6 +5,7 @@ import com.hauxy.turistguide2.service.TouristService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +19,17 @@ public class TouristController {
         this.service = service;
     }
 
+//    @GetMapping()
+//    public ResponseEntity<List<TouristAttraction>> getAttractions() {
+//        List<TouristAttraction> attractions = service.getTouristAttractions();
+//        return new ResponseEntity<>(attractions, HttpStatus.OK);
+//    }
+
     @GetMapping()
-    public ResponseEntity<List<TouristAttraction>> getAttractions() {
-        List<TouristAttraction> attractions = service.getTouristAttractions();
-        return new ResponseEntity<>(attractions, HttpStatus.OK);
+    public String getAttractions(Model model) {
+        List<TouristAttraction> attractionsList = service.getTouristAttractions();
+        model.addAttribute("listofattractions", attractionsList);
+        return "attractionList";
     }
 
     @GetMapping("{name}")
