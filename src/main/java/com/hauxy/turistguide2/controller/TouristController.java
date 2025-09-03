@@ -28,6 +28,12 @@ public class TouristController {
     public ResponseEntity<TouristAttraction> getAttraction(@PathVariable String name) {
         return new ResponseEntity<>(service.getAttraction(name), HttpStatus.OK);
     }
+    @GetMapping("{name}/tags")
+    public ResponseEntity<List<TouristAttraction>> getAttractionTags(@PathVariable String name) {
+        return new ResponseEntity<>(service.getTags(), HttpStatus.OK);
+
+    }
+
 
     @PostMapping("add")
     public ResponseEntity<List<TouristAttraction>> addAttraction(@RequestBody TouristAttraction touristAttraction) {
