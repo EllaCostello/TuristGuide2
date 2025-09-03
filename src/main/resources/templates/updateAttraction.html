@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:object="${attraction}" method="post" th:action="@{/save}">
+  <div th:each="tag : ${allTags}">
+    <input type="checkbox" th:field="*{tags}" th:value="${tag}" /> <span th:text="${tag}"></span>
+  </div>
+  <button type="submit">Gem</button>
+</form>
+
+</body>
+</html>

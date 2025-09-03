@@ -4,6 +4,7 @@ import com.hauxy.turistguide2.model.TouristAttraction;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -45,6 +46,11 @@ public class TouristRepository {
                 attractions.remove(t);
             }
         }
+    }
+
+    public List getTags() {
+        ArrayList<Tags> tagsList = new ArrayList<>(Arrays.asList(Tags.values()));
+            return tagsList;
     }
 
 

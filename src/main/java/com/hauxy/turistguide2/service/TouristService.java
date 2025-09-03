@@ -1,9 +1,12 @@
 package com.hauxy.turistguide2.service;
 
 import com.hauxy.turistguide2.model.TouristAttraction;
+import com.hauxy.turistguide2.repository.Tags;
 import com.hauxy.turistguide2.repository.TouristRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -40,4 +43,9 @@ public class TouristService {
     public void removeTouristAttraction(String name) {
         touristRepository.removeTouristAttraction(name);
     }
+
+    public List getTags() {
+        return touristRepository.getTags();
+    }
+
 }
