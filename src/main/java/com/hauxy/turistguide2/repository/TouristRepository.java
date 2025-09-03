@@ -26,7 +26,6 @@ public class TouristRepository {
         attractions.add(new TouristAttraction("Den Lille Havfrue", "Verdens ældste havfrue", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
         attractions.add(new TouristAttraction("Operaen", "Verdens ældste opera", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
 
-
     }
 
     public List<TouristAttraction> getTouristAttractions() {
@@ -54,9 +53,15 @@ public class TouristRepository {
         }
     }
 
-    public List getTags() {
-        ArrayList<Tag> tagList = new ArrayList<>(Arrays.asList(Tag.values()));
-            return tagList;
+
+    public List<Tag> getTagsByName(String name) {
+        for (TouristAttraction t : getTouristAttractions()) {
+            if (name.equals(t.getName())) {
+                return t.getTags();
+            }
+
+        }
+        return null;
     }
 
 

@@ -2,23 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Attractions</title>
 </head>
 <body>
-
+<h1>Tourist Attractions</h1>
 
 <table>
-    <tr th:if="${listofattractions.isEmpty()}">There are no attractions yet</tr>
+    <tr th:if="${listofattractions.isEmpty()}">
+        <td colspan="3">There are no attractions yet</td>
+    </tr>
     <tr th:if="${!listofattractions.isEmpty()}">
         <th>Name</th> <th>Description</th> <th>Tags</th>
     </tr>
-    <tr th:each="turistAttraction: ${listofattractions}">
+    <tr th:each="turistAttraction : ${listofattractions}">
         <td th:text="${turistAttraction.name}"></td>
         <td th:text="${turistAttraction.description}"></td>
-        <td th:text="${turistAttraction.tags}"><button th:href="@{${name}/tags}">Tags</button></td>
+        <td><a th:href="@{'/attractions/' + ${turistAttraction.name} + '/tags'}">Tags</a></td>
     </tr>
 </table>
-<button>Add attraction</button>
 
+<a th:href="@{/attractions/add}"><button>Add attraction</button></a>
 </body>
 </html>

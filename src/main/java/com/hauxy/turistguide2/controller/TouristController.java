@@ -36,10 +36,18 @@ public class TouristController {
     public ResponseEntity<TouristAttraction> getAttraction(@PathVariable String name) {
         return new ResponseEntity<>(service.getAttraction(name), HttpStatus.OK);
     }
-    @GetMapping("{name}/tags")
-    public ResponseEntity<List<TouristAttraction>> getAttractionTags(@PathVariable String name) {
-        return new ResponseEntity<>(service.getTags(), HttpStatus.OK);
+//    @GetMapping("{name}/tags")
+//    public ResponseEntity<List<TouristAttraction>> getAttractionTags(@PathVariable String name) {
+//
+//        return new ResponseEntity<>(service.getTags(), HttpStatus.OK);
+//
+//    }
 
+    @GetMapping("/{name}/tags")
+    public String getAttractionTags(@PathVariable String name, Model model) {
+        TouristAttraction attraction = service.getAttraction(name);
+        model.addAttribute("attraction", attraction);
+        return "tags";
     }
 
 
