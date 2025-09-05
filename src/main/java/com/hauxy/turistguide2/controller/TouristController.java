@@ -52,10 +52,11 @@ public class TouristController {
 
 
     @PostMapping("add")
-    public ResponseEntity<List<TouristAttraction>> addAttraction(@RequestBody TouristAttraction touristAttraction) {
+    public String addAttraction(@ModelAttribute TouristAttraction touristAttraction) {
         service.addTouristAttraction(touristAttraction);
-        return new ResponseEntity<>(service.getTouristAttractions(), HttpStatus.OK);
+        return "redirect:/attractions/attractionList";
     }
+
 
     @PostMapping("update")
     public ResponseEntity<TouristAttraction> updateAttraction(@RequestBody TouristAttraction touristAttraction) {
