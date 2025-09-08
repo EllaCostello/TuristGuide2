@@ -22,9 +22,9 @@ public class TouristRepository {
         tag1.add(Tag.GRATIS);
 
 
-        attractions.add(new TouristAttraction("Tivoli", "Verdens ældste tivoli", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
-        attractions.add(new TouristAttraction("Den Lille Havfrue", "Verdens ældste havfrue", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
-        attractions.add(new TouristAttraction("Operaen", "Verdens ældste opera", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
+        attractions.add(new TouristAttraction("Tivoli", "Verdens ældste tivoli", "København", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
+        attractions.add(new TouristAttraction("Den Lille Havfrue", "Verdens ældste havfrue", "København", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
+        attractions.add(new TouristAttraction("Operaen", "Verdens ældste opera", "København", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
 
     }
 
