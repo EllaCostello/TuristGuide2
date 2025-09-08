@@ -1,6 +1,7 @@
 package com.hauxy.turistguide2.controller;
 
 import com.hauxy.turistguide2.model.TouristAttraction;
+import com.hauxy.turistguide2.repository.Tag;
 import com.hauxy.turistguide2.service.TouristService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -50,8 +52,19 @@ public class TouristController {
         return "tags";
     }
 
+    @GetMapping("add")
+    public String addNewAttraction(Model model) {
+        TouristAttraction t = new TouristAttraction();
+        model.addAttribute("TouristAttraction", t);
+        model.addAttribute("ListOfTags", service.getAllTags());
+        model.addAttribute("ListOfCities",service.getAllCities());
+        List<Tag> chosenTags = new ArrayList<>();
+        model.addAttribute("chosenTags", chosenTags);
+        return "createAttraction";
+    }
 
-    @PostMapping("add")
+
+    @PostMapping("save")
     public String addAttraction(@ModelAttribute TouristAttraction touristAttraction) {
         service.addTouristAttraction(touristAttraction);
         return "redirect:/attractions/attractionList";

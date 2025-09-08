@@ -47,6 +47,14 @@ public class TouristService {
         return tags;
     }
 
+    public List<Tag> getAllTags() {
+        return touristRepository.getAllTags();
+    }
+
+    public List<String> getAllCities() {
+        return touristRepository.getAllCities();
+    }
+
 
 
 }

@@ -64,5 +64,23 @@ public class TouristRepository {
         return null;
     }
 
+    public List<Tag> getAllTags() {
+        return List.of(Tag.values());
+    }
+
+    public List<String> getAllCities() {
+        List<String> cities = new ArrayList<>(
+                List.of(
+                        "København",
+                        "Odense",
+                        "Aarhus",
+                        "Aalborg",
+                        "Kalundborg"
+                )
+        );
+
+        return cities;
+    }
+
 
 }
