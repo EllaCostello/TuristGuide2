@@ -19,6 +19,8 @@ public class TouristAttraction {
         this.tags = tags;
     }
 
+    public TouristAttraction() {}
+
     public String getName() {
         return name;
     }
@@ -47,7 +49,7 @@ public class TouristAttraction {
         return tags;
     }
 
-    public void setTags(ArrayList<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

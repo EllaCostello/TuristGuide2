@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
@@ -18,12 +17,6 @@ public class TouristController {
     public TouristController(TouristService service) {
         this.service = service;
     }
-
-//    @GetMapping()
-//    public ResponseEntity<List<TouristAttraction>> getAttractions() {
-//        List<TouristAttraction> attractions = service.getTouristAttractions();
-//        return new ResponseEntity<>(attractions, HttpStatus.OK);
-//    }
 
     @GetMapping()
     public String getAttractions(Model model) {
@@ -36,12 +29,7 @@ public class TouristController {
     public ResponseEntity<TouristAttraction> getAttraction(@PathVariable String name) {
         return new ResponseEntity<>(service.getAttraction(name), HttpStatus.OK);
     }
-//    @GetMapping("{name}/tags")
-//    public ResponseEntity<List<TouristAttraction>> getAttractionTags(@PathVariable String name) {
-//
-//        return new ResponseEntity<>(service.getTags(), HttpStatus.OK);
-//
-//    }
+
 
     @GetMapping("/{name}/tags")
     public String getAttractionTags(@PathVariable String name, Model model) {
@@ -50,18 +38,27 @@ public class TouristController {
         return "tags";
     }
 
-
-    @PostMapping("add")
-    public String addAttraction(@ModelAttribute TouristAttraction touristAttraction) {
-        service.addTouristAttraction(touristAttraction);
-        return "redirect:/attractions/attractionList";
+    @GetMapping("add")
+    public String addNewAttraction(Model model) {
+        TouristAttraction t = new TouristAttraction();
+        model.addAttribute("TouristAttraction", t);
+        model.addAttribute("ListOfTags", service.getAllTags());
+        model.addAttribute("ListOfCities",service.getAllCities());
+        return "createAttraction";
     }
 
 
-    @PostMapping("update")
-    public ResponseEntity<TouristAttraction> updateAttraction(@RequestBody TouristAttraction touristAttraction) {
-        service.updateTouristAttraction(touristAttraction.getName(), touristAttraction.getDescription());
-        return new ResponseEntity<>(service.getAttraction(touristAttraction.getName()), HttpStatus.OK);
+    @PostMapping("save")
+    public String addAttraction(@ModelAttribute TouristAttraction touristAttraction) {
+        service.addTouristAttraction(touristAttraction);
+        return "redirect:/attractions";
+    }
+
+
+    @PostMapping("{name}/update")
+    public String updateAttraction(@ModelAttribute TouristAttraction touristAttraction) {
+        service.updateTouristAttraction(touristAttraction);
+        return "redirect:/attractions";
     }
 
     @PostMapping("delete/{name}")
@@ -69,5 +66,15 @@ public class TouristController {
         service.removeTouristAttraction(name);
         return new ResponseEntity<>(service.getTouristAttractions(), HttpStatus.OK);
     }
+
+    @GetMapping("{name}/edit")
+    public String getAttractionEdit(@PathVariable String name, Model model) {
+        TouristAttraction attraction = service.getAttraction(name);
+        model.addAttribute("attraction", attraction);
+        model.addAttribute("ListOfCities", service.getAllCities());
+        model.addAttribute("ListOfTags", service.getAllTags());
+        return "attractionEdit";
+    }
+
 
 }
