@@ -70,4 +70,12 @@ public class TouristController {
         return new ResponseEntity<>(service.getTouristAttractions(), HttpStatus.OK);
     }
 
+    @GetMapping("{name}/edit")
+    public String getAttractionEdit(@PathVariable String name, Model model) {
+        TouristAttraction attraction = service.getAttraction(name);
+        model.addAttribute("attraction", attraction);
+        return "attractionEdit";
+    }
+
+
 }
