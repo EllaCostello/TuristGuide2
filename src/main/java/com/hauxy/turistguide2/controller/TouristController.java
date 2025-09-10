@@ -1,15 +1,12 @@
 package com.hauxy.turistguide2.controller;
 
 import com.hauxy.turistguide2.model.TouristAttraction;
-import com.hauxy.turistguide2.repository.Tag;
 import com.hauxy.turistguide2.service.TouristService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -74,6 +71,7 @@ public class TouristController {
     public String getAttractionEdit(@PathVariable String name, Model model) {
         TouristAttraction attraction = service.getAttraction(name);
         model.addAttribute("attraction", attraction);
+        model.addAttribute("ListOfCities", service.getAllCities());
         model.addAttribute("ListOfTags", service.getAllTags());
         return "attractionEdit";
     }

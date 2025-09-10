@@ -30,10 +30,11 @@ public class TouristRepository {
         attractions.add(touristAttraction);
     }
 
-    public void updateTouristAttraction(String name, String updateDescription, List<Tag> tags) {
+    public void updateTouristAttraction(String name, String updateDescription, String city, List<Tag> tags) {
         for (TouristAttraction t : getTouristAttractions()) {
             if (name.equals(t.getName())) {
                 t.setDescription(updateDescription);
+                t.setCity(city);
                 t.setTags(tags);
             }
         }

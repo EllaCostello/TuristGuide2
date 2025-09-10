@@ -33,7 +33,7 @@ public class TouristService {
     }
 
     public void updateTouristAttraction(TouristAttraction touristAttraction) {
-        touristRepository.updateTouristAttraction(touristAttraction.getName(), touristAttraction.getDescription(), touristAttraction.getTags());
+        touristRepository.updateTouristAttraction(touristAttraction.getName(), touristAttraction.getDescription(), touristAttraction.getCity(), touristAttraction.getTags());
     }
 
     public void addTouristAttraction(TouristAttraction touristAttraction) {
