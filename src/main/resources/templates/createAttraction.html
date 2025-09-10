@@ -22,10 +22,10 @@
 
         <label for="tags">Tags</label>
         <fieldset id="tags">
-            <div th:each="tags : ${ListOfTags}">
+            <div th:each="opt : ${ListOfTags}">
                 <label>
-                    <input type="checkbox" th:field="*{tags}" th:value="${chosenTags}">
-                    <span th:text="${tags}">Tags</span>
+                    <input type="checkbox" th:field="*{tags}" th:value="${opt}">
+                    <span th:text="${opt}"></span>
                 </label>
             </div>
         </fieldset>

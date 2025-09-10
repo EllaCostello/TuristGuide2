@@ -14,7 +14,15 @@
     <label for="description">Description:</label><br>
     <textarea id="description" th:field="*{description}"></textarea><br><br>
 
-
+    <label for="tags">Tags</label>
+    <fieldset id="tags">
+        <div th:each="opt : ${ListOfTags}">
+            <label>
+                <input type="checkbox" th:field="*{tags}" th:value="${opt}">
+                <span th:text="${opt}"></span>
+            </label>
+        </div>
+    </fieldset>
 
     <button type="submit">Save Changes</button>
     <a th:href="@{/attractions}">Cancel</a>

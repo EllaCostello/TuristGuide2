@@ -16,15 +16,9 @@ public class TouristRepository {
     }
 
     public void populateTouristAttraction() {
-        ArrayList<Tag> tag1 = new ArrayList<>();
-        tag1.add(Tag.NATUR);
-        tag1.add(Tag.BØRNEVENLIG);
-        tag1.add(Tag.GRATIS);
-
-
-        attractions.add(new TouristAttraction("Tivoli", "Verdens ældste tivoli", "København", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
-        attractions.add(new TouristAttraction("Den Lille Havfrue", "Verdens ældste havfrue", "København", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
-        attractions.add(new TouristAttraction("Operaen", "Verdens ældste opera", "København", List.of(Tag.BØRNEVENLIG, Tag.DYRT)));
+        attractions.add(new TouristAttraction("Tivoli", "Verdens ældste tivoli", "København", new ArrayList<>(Arrays.asList(Tag.BØRNEVENLIG, Tag.DYRT, Tag.FORLYSTELSEPARK))));
+        attractions.add(new TouristAttraction("Den Lille Havfrue", "Verdens ældste havfrue", "København", new ArrayList<>(Arrays.asList(Tag.BØRNEVENLIG, Tag.GRATIS, Tag.KUNST))));
+        attractions.add(new TouristAttraction("Operaen", "Verdens ældste opera", "København", new ArrayList<>(Arrays.asList(Tag.DYRT, Tag.KUNST, Tag.KONCERT))));
 
     }
 
@@ -36,10 +30,11 @@ public class TouristRepository {
         attractions.add(touristAttraction);
     }
 
-    public void updateTouristAttraction(String name, String updateDescription) {
+    public void updateTouristAttraction(String name, String updateDescription, List<Tag> tags) {
         for (TouristAttraction t : getTouristAttractions()) {
             if (name.equals(t.getName())) {
                 t.setDescription(updateDescription);
+                t.setTags(tags);
             }
         }
     }

@@ -21,12 +21,6 @@ public class TouristController {
         this.service = service;
     }
 
-//    @GetMapping()
-//    public ResponseEntity<List<TouristAttraction>> getAttractions() {
-//        List<TouristAttraction> attractions = service.getTouristAttractions();
-//        return new ResponseEntity<>(attractions, HttpStatus.OK);
-//    }
-
     @GetMapping()
     public String getAttractions(Model model) {
         List<TouristAttraction> attractionsList = service.getTouristAttractions();
@@ -38,12 +32,7 @@ public class TouristController {
     public ResponseEntity<TouristAttraction> getAttraction(@PathVariable String name) {
         return new ResponseEntity<>(service.getAttraction(name), HttpStatus.OK);
     }
-//    @GetMapping("{name}/tags")
-//    public ResponseEntity<List<TouristAttraction>> getAttractionTags(@PathVariable String name) {
-//
-//        return new ResponseEntity<>(service.getTags(), HttpStatus.OK);
-//
-//    }
+
 
     @GetMapping("/{name}/tags")
     public String getAttractionTags(@PathVariable String name, Model model) {
@@ -58,8 +47,6 @@ public class TouristController {
         model.addAttribute("TouristAttraction", t);
         model.addAttribute("ListOfTags", service.getAllTags());
         model.addAttribute("ListOfCities",service.getAllCities());
-        List<Tag> chosenTags = new ArrayList<>();
-        model.addAttribute("chosenTags", chosenTags);
         return "createAttraction";
     }
 
@@ -67,14 +54,14 @@ public class TouristController {
     @PostMapping("save")
     public String addAttraction(@ModelAttribute TouristAttraction touristAttraction) {
         service.addTouristAttraction(touristAttraction);
-        return "redirect:/attractions/attractionList";
+        return "redirect:/attractions";
     }
 
 
-    @PostMapping("update")
-    public ResponseEntity<TouristAttraction> updateAttraction(@RequestBody TouristAttraction touristAttraction) {
-        service.updateTouristAttraction(touristAttraction.getName(), touristAttraction.getDescription());
-        return new ResponseEntity<>(service.getAttraction(touristAttraction.getName()), HttpStatus.OK);
+    @PostMapping("{name}/update")
+    public String updateAttraction(@ModelAttribute TouristAttraction touristAttraction) {
+        service.updateTouristAttraction(touristAttraction);
+        return "redirect:/attractions";
     }
 
     @PostMapping("delete/{name}")
@@ -87,6 +74,7 @@ public class TouristController {
     public String getAttractionEdit(@PathVariable String name, Model model) {
         TouristAttraction attraction = service.getAttraction(name);
         model.addAttribute("attraction", attraction);
+        model.addAttribute("ListOfTags", service.getAllTags());
         return "attractionEdit";
     }
 

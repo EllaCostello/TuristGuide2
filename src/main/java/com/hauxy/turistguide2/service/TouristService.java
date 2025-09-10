@@ -5,6 +5,7 @@ import com.hauxy.turistguide2.repository.Tag;
 import com.hauxy.turistguide2.repository.TouristRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,8 +32,8 @@ public class TouristService {
         return null;
     }
 
-    public void updateTouristAttraction(String name, String updateDescription) {
-        touristRepository.updateTouristAttraction(name, updateDescription);
+    public void updateTouristAttraction(TouristAttraction touristAttraction) {
+        touristRepository.updateTouristAttraction(touristAttraction.getName(), touristAttraction.getDescription(), touristAttraction.getTags());
     }
 
     public void addTouristAttraction(TouristAttraction touristAttraction) {
