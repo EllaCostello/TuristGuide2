@@ -35,6 +35,7 @@
 
     <button type="submit">Save Changes</button>
     <a th:href="@{/attractions}">Cancel</a>
+    <button th:href="@{'/attractions/' + ${attraction.name} + '/delete'}">DELETE</button>
 </form>
 
 </body>

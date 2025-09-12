@@ -39,8 +39,8 @@ public class TouristService {
     public void addTouristAttraction(TouristAttraction touristAttraction) {
         touristRepository.addTouristAttraction(touristAttraction);
     }
-    public void removeTouristAttraction(String name) {
-        touristRepository.removeTouristAttraction(name);
+    public void removeTouristAttraction(TouristAttraction touristAttraction) {
+        touristRepository.removeTouristAttraction(touristAttraction.getName());
     }
 
     public List<Tag> getTagsByName(String name) {

@@ -61,10 +61,18 @@ public class TouristController {
         return "redirect:/attractions";
     }
 
-    @PostMapping("delete/{name}")
+    /*@PostMapping("delete/{name}")
     public ResponseEntity<List<TouristAttraction>> deleteAttraction(@PathVariable String name) {
         service.removeTouristAttraction(name);
         return new ResponseEntity<>(service.getTouristAttractions(), HttpStatus.OK);
+    }
+
+     */
+
+    @PostMapping("{name}/delete")
+    public String deleteAtttraction(@ModelAttribute TouristAttraction touristAttraction) {
+        service.removeTouristAttraction(touristAttraction);
+        return "redirect:/attractions";
     }
 
     @GetMapping("{name}/edit")
