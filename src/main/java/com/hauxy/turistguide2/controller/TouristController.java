@@ -12,7 +12,7 @@ import java.util.List;
 @Controller
 @RequestMapping("attractions")
 public class TouristController {
-    TouristService service;
+    final TouristService service;
 
     public TouristController(TouristService service) {
         this.service = service;
