@@ -2,7 +2,6 @@ package com.hauxy.turistguide2.model;
 
 import com.hauxy.turistguide2.repository.Tag;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TouristAttraction {
