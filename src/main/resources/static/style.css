@@ -11,9 +11,31 @@ body {
     background-color: #f8f9fa;
     padding: 2rem;
 }
+nav {
+    background-color: rgb(43, 45, 48);
+    top: 0;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    height: 50px;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 18px;
+
+}
 
 
 h1 {
+    margin-top: 30px;
     margin-bottom: 1.5rem;
     font-size: 2rem;
     text-align: center;
@@ -59,7 +81,7 @@ a {
 }
 
 a:hover {
-    text-decoration: underline;
+    color: #007bff;
 }
 
 
