@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public class TouristRepository {
-    List<TouristAttraction> attractions = new ArrayList<>();
+    final List<TouristAttraction> attractions = new ArrayList<>();
 
     public TouristRepository() {
         populateTouristAttraction();
@@ -66,7 +66,8 @@ public class TouristRepository {
     }
 
     public List<String> getAllCities() {
-        List<String> cities = new ArrayList<>(
+
+        return new ArrayList<>(
                 List.of(
                         "København",
                         "Odense",
@@ -75,8 +76,6 @@ public class TouristRepository {
                         "Kalundborg"
                 )
         );
-
-        return cities;
     }
 
 

@@ -5,12 +5,11 @@ import com.hauxy.turistguide2.repository.Tag;
 import com.hauxy.turistguide2.repository.TouristRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TouristService {
-    TouristRepository touristRepository;
+    final TouristRepository touristRepository;
 
     public TouristService(TouristRepository touristRepository) {
         this.touristRepository = touristRepository;
@@ -44,8 +43,7 @@ public class TouristService {
     }
 
     public List<Tag> getTagsByName(String name) {
-        List<Tag> tags = touristRepository.getTagsByName(name);
-        return tags;
+        return touristRepository.getTagsByName(name);
     }
 
     public List<Tag> getAllTags() {
