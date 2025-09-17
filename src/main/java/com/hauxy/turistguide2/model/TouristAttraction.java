@@ -52,13 +52,5 @@ public class TouristAttraction {
         this.tags = tags;
     }
 
-    public void addTags(Tag tag) {
-        if (!this.tags.contains(tag)) {
-            this.tags.add(tag);
-        }
-    }
 
-    public void removeTag(Tag tag) {
-        tags.remove(tag);
-    }
 }
