@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    margin: 0;
+    padding: 40px;
+}
+
+form {
+    background: #fff;
+    padding: 20px 30px;
+    max-width: 400px;
+    margin: auto;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+fieldset label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+fieldset input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 16px;
+    background: #007bff;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #0056b3;
+}
