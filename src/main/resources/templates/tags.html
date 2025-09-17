@@ -4,17 +4,25 @@
     <meta charset="UTF-8">
     <title>Attraction Tags</title>
     <link th:href="@{/tagsStyleTest.css}" rel="stylesheet">
-
+    <link rel="icon" type="image/png" th:href="@{/images/københavn-no-bg.png}">
 </head>
 <body>
+<nav>
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{/attractions}">Attractions</a>
+</nav>
 
-<h1 th:text="${attraction.name}"></h1>
 
-<h2>Tags:</h2>
-<ul>
-    <li th:each="tag : ${attraction.tags}" th:text="${tag}"></li>
-</ul>
+<div class="center-content">
+    <h1 th:text="${attraction.name}"></h1>
 
-<a th:href="@{/attractions}">Tilbage</a>
+    <h2>Tags:</h2>
+    <ul>
+        <li th:each="tag : ${attraction.tags}" th:text="${tag}"></li>
+    </ul>
+
+    <a th:href="@{/attractions}" class="button-link">Tilbage</a>
+</div>
 </body>
+
 </html>

@@ -1,13 +1,43 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
 }
 
+
+nav {
+    background-color: rgb(43, 45, 48);
+    top: 0;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    height: 50px;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 18px;
+
+}
+nav a:hover{
+    color: #007acc;
+
+}
+
+.center-content {
+    text-align: center;
+    margin-top: 20px;
+}
+
 h1 {
-    margin-top: 30px;
     color: #000000;
 }
 
@@ -31,7 +61,8 @@ li {
     border-radius: 8px;
 }
 
-a {
+
+.button-link {
     display: block;
     margin: 40px auto 20px;
     padding: 12px 20px;
@@ -43,7 +74,6 @@ a {
     transition: background 0.2s;
 }
 
-a:hover {
+.button-link:hover {
     background: #005a99;
 }
-

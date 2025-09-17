@@ -4,9 +4,18 @@
     <title>Edit Tourist Attraction</title>
     <meta charset="UTF-8">
     <link th:href="@{/editStyle.css}" rel="stylesheet">
+    <link rel="icon" type="image/png" th:href="@{/images/københavn-no-bg.png}">
 
 </head>
 <body>
+
+<nav>
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{/attractions}">Attractions</a>
+
+</nav>
+
+
 <h1 th:text="'Edit: ' + ${attraction.name}"></h1>
 
 <form th:action="@{'/attractions/' + ${attraction.name} + '/update'}"
@@ -35,8 +44,9 @@
         </div>
     </fieldset>
 
-    <button type="submit">Save Changes</button>
-    <a th:href="@{/attractions}">Cancel</a>
+    <button type="submit" class="formButton">Save Changes</button>
+    <a th:href="@{/attractions}" class="formButton cancelButton">Cancel</a>
+
 </form>
 
 </body>

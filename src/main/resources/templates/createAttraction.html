@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <title>Create Attraction</title>
     <link th:href="@{/createAttractionStyles.css}" rel="stylesheet">
+    <link rel="icon" type="image/png" th:href="@{/images/københavn-no-bg.png}">
 </head>
 <body>
+<nav>
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{/attractions}">Attractions</a>
+
+</nav>
+
+
+
+
     <form th:action="@{/attractions/save}" th:object="${TouristAttraction}" method="post">
         <label for="name">Name</label>
         <input th:field="${TouristAttraction.name}" id="name">
