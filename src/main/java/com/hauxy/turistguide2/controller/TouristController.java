@@ -38,21 +38,59 @@ public class TouristController {
         return "tags";
     }
 
-    @GetMapping("add")
-    public String addNewAttraction(Model model) {
-        TouristAttraction t = new TouristAttraction();
-        model.addAttribute("TouristAttraction", t);
-        model.addAttribute("ListOfTags", service.getAllTags());
-        model.addAttribute("ListOfCities",service.getAllCities());
-        return "createAttraction";
+//    @GetMapping("add")
+//    public String addNewAttraction(Model model) {
+//        TouristAttraction t = new TouristAttraction();
+//        model.addAttribute("TouristAttraction", t);
+//        model.addAttribute("ListOfTags", service.getAllTags());
+//        model.addAttribute("ListOfCities",service.getAllCities());
+//        return "createAttraction";
+//    }
+//
+@GetMapping("add")
+public String addNewAttraction(Model model) {
+    TouristAttraction t = new TouristAttraction();
+    model.addAttribute("TouristAttraction", t);
+    model.addAttribute("ListOfTags", service.getAllTags());
+    model.addAttribute("ListOfCities", service.getAllCities());
+    return "createAttraction";
+}
+
+    @PostMapping("add")
+    public String saveAttraction(@ModelAttribute TouristAttraction t, Model model) {
+        boolean success = service.saveAttraction(t);
+
+        if (!success) {
+            model.addAttribute("error", "Navn må ikke være tomt");
+            model.addAttribute("TouristAttraction", t);
+            model.addAttribute("ListOfTags", service.getAllTags());
+            model.addAttribute("ListOfCities", service.getAllCities());
+            return "createAttraction"; // reload form with error
+        }
+
+        return "redirect:/attractions";
     }
 
-
     @PostMapping("save")
-    public String addAttraction(@ModelAttribute TouristAttraction touristAttraction) {
+    public String addAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) {
+        if (touristAttraction.getName() == null || touristAttraction.getName().trim().isEmpty()) {
+            model.addAttribute("error", "Navn må ikke være tomt");
+            model.addAttribute("TouristAttraction", touristAttraction);
+            model.addAttribute("ListOfTags", service.getAllTags());
+            model.addAttribute("ListOfCities", service.getAllCities());
+            return "createAttraction";
+        }
+
         service.addTouristAttraction(touristAttraction);
         return "redirect:/attractions";
     }
+
+
+//    @PostMapping("save")
+//    public String addAttraction(@ModelAttribute TouristAttraction touristAttraction) {
+//        service.addTouristAttraction(touristAttraction);
+//        return "redirect:/attractions";
+//    }
 
 
     @PostMapping("{name}/update")

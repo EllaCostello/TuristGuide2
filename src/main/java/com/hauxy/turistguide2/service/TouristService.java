@@ -31,6 +31,14 @@ public class TouristService {
         return null;
     }
 
+    public boolean saveAttraction(TouristAttraction touristAttraction) {
+        if (touristAttraction.getName() == null || touristAttraction.getName().trim().isEmpty()) {
+            return false;
+        }
+        touristRepository.addTouristAttraction(touristAttraction);
+        return true;
+    }
+
     public void updateTouristAttraction(TouristAttraction touristAttraction) {
         touristRepository.updateTouristAttraction(touristAttraction.getName(), touristAttraction.getDescription(), touristAttraction.getCity(), touristAttraction.getTags());
     }
@@ -41,6 +49,7 @@ public class TouristService {
     public void removeTouristAttraction(String name) {
         touristRepository.removeTouristAttraction(name);
     }
+
 
     public List<Tag> getTagsByName(String name) {
         return touristRepository.getTagsByName(name);
