@@ -45,6 +45,7 @@ public class TouristRepository {
         for (TouristAttraction t : attractions) {
             if (name.equals(t.getName())) {
                 attractions.remove(t);
+                break;
             }
         }
     }
