@@ -69,7 +69,7 @@ public String addNewAttraction(Model model) {
             model.addAttribute("TouristAttraction", touristAttraction);
             model.addAttribute("ListOfTags", service.getAllTags());
             model.addAttribute("ListOfCities", service.getAllCities());
-            return "createAttraction";
+            return "redirect:/createAttraction";
         }
 
         service.addTouristAttraction(touristAttraction);
