@@ -44,7 +44,7 @@ public String addNewAttraction(Model model) {
     model.addAttribute("TouristAttraction", t);
     model.addAttribute("ListOfTags", service.getAllTags());
     model.addAttribute("ListOfCities", service.getAllCities());
-    return "createAttraction";
+    return "redirect:/createAttraction";
 }
 
     @PostMapping("add")
