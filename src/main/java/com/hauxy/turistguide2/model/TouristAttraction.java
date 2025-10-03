@@ -5,9 +5,11 @@ import com.hauxy.turistguide2.repository.Tag;
 import java.util.List;
 
 public class TouristAttraction {
+    private int id;
     private String name;
     private String description;
     private String city;
+    private int CityID;
     private List<Tag> tags;
 
 
@@ -17,6 +19,14 @@ public class TouristAttraction {
         this.city = city;
         this.tags = tags;
     }
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
 
     public TouristAttraction() {}
 

@@ -2,6 +2,7 @@ package com.hauxy.turistguide2.service;
 
 import com.hauxy.turistguide2.model.TouristAttraction;
 import com.hauxy.turistguide2.repository.Tag;
+import com.hauxy.turistguide2.repository.TouristAttractionDAO;
 import com.hauxy.turistguide2.repository.TouristRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class TouristService {
     final TouristRepository touristRepository;
+
 
     public TouristService(TouristRepository touristRepository) {
         this.touristRepository = touristRepository;

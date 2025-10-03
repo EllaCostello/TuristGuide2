@@ -29,7 +29,7 @@ class TouristControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private TouristService touristService;
+    private TouristService touristService1;
 
     @BeforeEach
     void setUp() {
@@ -57,15 +57,18 @@ class TouristControllerTest {
         tagList.add(Tag.KONCERT);
         tagList.add(Tag.BØRNEVENLIG);
 
+
+        when(touristService1.saveAttraction(any(TouristAttraction.class))).thenReturn(true);
         mockMvc.perform(post("/attractions/add")
                 .param("name", "Parken")
                 .param("description", "Football Stadium")
+                        .param("city", "København")
                 .param("tags",  "DYRT", "KONCERT", "BØRNEVENLIG"))
-                .andExpect(status().is3xxRedirection());
-//                .andExpect(view().name("redirect:/attractions/attractionList"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/attractions"));
 
         ArgumentCaptor<TouristAttraction> captor = ArgumentCaptor.forClass(TouristAttraction.class);
-        verify(touristService).addTouristAttraction(captor.capture());
+        verify(touristService1).saveAttraction(captor.capture());
 
         TouristAttraction captured = captor.getValue();
         assertEquals("Parken", captured.getName());
