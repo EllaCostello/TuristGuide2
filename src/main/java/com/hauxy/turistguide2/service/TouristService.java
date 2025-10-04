@@ -2,7 +2,6 @@ package com.hauxy.turistguide2.service;
 
 import com.hauxy.turistguide2.model.TouristAttraction;
 import com.hauxy.turistguide2.repository.Tag;
-import com.hauxy.turistguide2.repository.TouristAttractionDAO;
 import com.hauxy.turistguide2.repository.TouristRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,22 +15,11 @@ public class TouristService {
     public TouristService(TouristRepository touristRepository) {
         this.touristRepository = touristRepository;
     }
-    public void populateTouristAttraction() {
-        touristRepository.populateTouristAttraction();
-    }
-
     public List<TouristAttraction> getTouristAttractions() {
         return touristRepository.getTouristAttractions();
     }
 
-//    public TouristAttraction getAttraction(String name) {
-//        for (TouristAttraction t : getTouristAttractions()) {
-//            if (name.equals(t.getName())) {
-//                return t;
-//            }
-//        }
-//        return null;
-//    }
+
     public TouristAttraction getAttraction(String name) {
         List<TouristAttraction> attractions = touristRepository.getTouristAttractions();
         for (TouristAttraction t : attractions) {
@@ -61,11 +49,6 @@ public class TouristService {
         touristRepository.removeTouristAttraction(name);
     }
 
-
-    public List<Tag> getTagsByName(String name) {
-        return touristRepository.getTagsByName(name);
-    }
-
     public List<Tag> getAllTags() {
         return touristRepository.getAllTags();
     }
@@ -73,8 +56,5 @@ public class TouristService {
     public List<String> getAllCities() {
         return touristRepository.getAllCities();
     }
-
-
-
 
 }

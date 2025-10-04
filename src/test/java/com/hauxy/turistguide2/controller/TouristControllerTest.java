@@ -87,6 +87,7 @@ class TouristControllerTest {
 
 
     // Aftalt med Ian at vi ser på DispatcherServlet fejl på fredag da det er en større fejl
+    // Fixed
     @Test
     void shouldGetAttractions() throws Exception {
         mockMvc.perform(get("/attractions"))
@@ -94,30 +95,4 @@ class TouristControllerTest {
                 .andExpect(view().name("attractionList"));
     }
 
-   /* @Test
-    void shouldAddAttraction() throws Exception {
-        List<Tag> tagList = new ArrayList<>();
-        tagList.add(Tag.DYRT);
-        tagList.add(Tag.KONCERT);
-        tagList.add(Tag.BØRNEVENLIG);
-
-
-        when(touristService1.saveAttraction(any(TouristAttraction.class))).thenReturn(true);
-        mockMvc.perform(post("/attractions/add")
-                .param("name", "Parken")
-                .param("description", "Football Stadium")
-                        .param("city", "København")
-                .param("tags",  "DYRT", "KONCERT", "BØRNEVENLIG"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/attractions"));
-
-        ArgumentCaptor<TouristAttraction> captor = ArgumentCaptor.forClass(TouristAttraction.class);
-        verify(touristService1).saveAttraction(captor.capture());
-
-        TouristAttraction captured = captor.getValue();
-        assertEquals("Parken", captured.getName());
-        assertEquals("Football Stadium", captured.getDescription());
-        assertEquals(tagList, captured.getTags());
-    }
-    */
 }

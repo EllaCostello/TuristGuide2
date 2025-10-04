@@ -1,7 +1,6 @@
 package com.hauxy.turistguide2.repository;
 
 import com.hauxy.turistguide2.model.TouristAttraction;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,8 +15,8 @@ public class TouristAttractionDAO {
     private final TouristAttractionRowMapper touristRowMapper;
 
     public TouristAttractionDAO(JdbcTemplate jdbc) {
-        this.jdbc = jdbc; // Spring injects JdbcTemplate
-        this.touristRowMapper = new TouristAttractionRowMapper(this); // pass DAO
+        this.jdbc = jdbc;
+        this.touristRowMapper = new TouristAttractionRowMapper(this);
     }
 
     public List<TouristAttraction> getTouristAttractions() {
@@ -79,10 +78,7 @@ public class TouristAttractionDAO {
         return Tag.valueOf(tagName.toUpperCase());
     }
 
-    public int getTagIDByName(String name) {
-        String sql = "SELECT attractions.tag.tagID FROM attractions.tag WHERE name = ?";
-        return jdbc.queryForObject(sql, Integer.class, name);
-    }
+
 
     public List<Tag> getTagsByTouristAttractionName(String attractionName) {
         List<Tag> tags = new ArrayList<>();
@@ -109,30 +105,14 @@ public class TouristAttractionDAO {
         return cities;
     }
 
-//    public List<Tag> getAllTags() {
-//        List<Tag> tags = new ArrayList<>();
-//        String sql = "SELECT attractions.attraction_tag.tagID FROM attractions.attraction_tag";
-//        List<Integer> tagIDs = jdbc.query(sql, (rs, rowNum) -> rs.getInt("tagID"));
-//        for (int id : tagIDs) {
-//            tags.add(getTagByID(id));
-//        }
-//        return tags;
-//    }
+
     public List<Tag> getAllTags() {
         String sql = "SELECT DISTINCT name FROM attractions.tag";
         List<Tag> tags = jdbc.query(sql, (rs, rowNum) -> Tag.valueOf(rs.getString("name").toUpperCase()));
         return tags;
     }
 
-    public int getTagIDByAttractionID(int attractionID) {
-        String sql = "SELECT attractions.attraction_tag.tagID FROM attractions.attraction_tag WHERE attractionID = ?";
-        return jdbc.queryForObject(sql, Integer.class, attractionID);
-    }
 
-    public int getAttractionIDByTagID(int tagID) {
-        String sql = "SELECT attractions.attraction_tag.attractionID FROM attractions.attraction_tag WHERE tagID = ?";
-        return jdbc.queryForObject(sql, Integer.class, tagID);
-    }
 
     public void updateTags(List<Tag> tags, int attractionID) {
 

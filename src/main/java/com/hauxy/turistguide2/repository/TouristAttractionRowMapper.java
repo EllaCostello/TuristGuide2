@@ -4,7 +4,6 @@ import com.hauxy.turistguide2.model.TouristAttraction;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 public class TouristAttractionRowMapper implements RowMapper<TouristAttraction> {
