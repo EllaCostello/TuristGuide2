@@ -42,8 +42,9 @@ public class TouristAttractionDAO {
     }
 
     public void updateTouristAttraction(String name, String updateDescription, String city, List<Tag> tags) {
-        String sql = "UPDATE attractions.attraction SET name = ?, description = ?, city = ? WHERE attractions.attraction.attractionID = ?";
-        jdbc.update(sql, name, updateDescription, city);
+        String sql = "UPDATE attractions.attraction SET description = ?, cityID = ? WHERE name = ?;";
+        int cityID = getCityIDByName(city);
+        jdbc.update(sql,updateDescription, cityID, name);
         updateTags(tags, getAttractionIDByName(name));
     }
 
@@ -133,10 +134,12 @@ public class TouristAttractionDAO {
         jdbc.update(sqlDeleteTags, attractionID);
 
 
-        String sqlGetTagID = "SELECT tagId FROM tag WHERE name = ?";
+        String sqlGetTagID = "SELECT attractions.tag.tagId FROM attractions.tag WHERE name = ?";
         String sqlInsertTag = "INSERT INTO attraction_tag (attractionId, tagId) VALUES (?, ?)";
 
         for (Tag tag : tags) {
+            String tagName = tag.name();
+
             Integer tagID = jdbc.queryForObject(sqlGetTagID, new Object[]{tag.name()}, Integer.class);
             jdbc.update(sqlInsertTag, attractionID, tagID);
         }

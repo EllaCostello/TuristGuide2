@@ -23,7 +23,7 @@ public class TouristRepository {
 
     // Constructor injection
     public TouristRepository(TouristAttractionDAO dao) {
-        this.dao = dao; // Spring injects DAO
+        this.dao = dao;
     }
     public void populateTouristAttraction() {
 //        attractions.add(new TouristAttraction("Tivoli", "Verdens ældste tivoli", "København", new ArrayList<>(Arrays.asList(Tag.BØRNEVENLIG, Tag.DYRT, Tag.FORLYSTELSEPARK))));
