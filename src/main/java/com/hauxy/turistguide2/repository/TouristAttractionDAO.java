@@ -130,7 +130,7 @@ public class TouristAttractionDAO {
 
     public void updateTags(List<Tag> tags, int attractionID) {
 
-        String sqlDeleteTags = "DELETE FROM attraction_tag WHERE attractionId = ?";
+        String sqlDeleteTags = "DELETE FROM attraction.attraction_tag WHERE attraction.attraction_tag.attractionId = ?";
         jdbc.update(sqlDeleteTags, attractionID);
 
 
@@ -139,8 +139,8 @@ public class TouristAttractionDAO {
 
         for (Tag tag : tags) {
             String tagName = tag.name();
-
-            Integer tagID = jdbc.queryForObject(sqlGetTagID, new Object[]{tag.name()}, Integer.class);
+            String newTagName = tagName.substring(0, 1).toUpperCase() + tagName.substring(1).toLowerCase();
+            Integer tagID = jdbc.queryForObject(sqlGetTagID, new Object[]{newTagName}, Integer.class);
             jdbc.update(sqlInsertTag, attractionID, tagID);
         }
     }

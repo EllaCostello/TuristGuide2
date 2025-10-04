@@ -23,15 +23,8 @@ public class TouristGuide2RepositoryTest {
     @Autowired
     private TouristRepository repo;
 
-    @Test
-    void getTouristAttraction() {
-        List<TouristAttraction> all = repo.getTouristAttractions();
-        assertThat(all).isNotNull();
-        assertThat(all.size()).isEqualTo(3);
-        assertThat(all.get(0).getName()).isEqualTo("Tivoli");
-        assertThat(all.get(2).getName()).isEqualTo("Operaen");
-    }
 
+    //Create
     @Test
     void addTouristAttraction() {
         repo.addTouristAttraction(new TouristAttraction("testName", "testDescription", "København",
@@ -44,7 +37,17 @@ public class TouristGuide2RepositoryTest {
             }
         }
     }
+    // Read
+    @Test
+    void getTouristAttraction() {
+        List<TouristAttraction> all = repo.getTouristAttractions();
+        assertThat(all).isNotNull();
+        assertThat(all.size()).isEqualTo(3);
+        assertThat(all.get(0).getName()).isEqualTo("Tivoli");
+        assertThat(all.get(2).getName()).isEqualTo("Operaen");
+    }
 
+    //Update
     @Test
     void updateTouristAttraction() {
         repo.addTouristAttraction(new TouristAttraction("testName", "testDescription", "Aalborg",
@@ -62,6 +65,39 @@ public class TouristGuide2RepositoryTest {
             }
 
         }
+    }
+
+    // Delete
+    @Test
+    void removeTouristAttraction() {
+        repo.addTouristAttraction(new TouristAttraction(
+                "testName", "testDescription", "Aalborg",
+                new ArrayList<>(Arrays.asList(Tag.BØRNEVENLIG, Tag.DYRT))
+        ));
+
+        var atBefore = repo.getTouristAttractions();
+        boolean foundBefore = false;
+        for (TouristAttraction t : atBefore) {
+            if (t.getName().equals("testName")) {
+                foundBefore = true;
+                assertThat(t).isNotNull();
+                assertThat(t.getDescription()).isEqualTo("testDescription");
+            }
+        }
+        assertThat(foundBefore).isTrue(); // sanity check
+
+        repo.removeTouristAttraction("testName");
+
+        var atAfter = repo.getTouristAttractions();
+        boolean foundAfter = false;
+        for (TouristAttraction t : atAfter) {
+            if (t.getName().equals("testName")) {
+                foundAfter = true;
+            }
+        }
+        assertThat(foundAfter).isFalse();
+
+
     }
 
 
