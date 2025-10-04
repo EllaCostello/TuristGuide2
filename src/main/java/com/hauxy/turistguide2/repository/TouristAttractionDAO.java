@@ -109,15 +109,21 @@ public class TouristAttractionDAO {
         return cities;
     }
 
+//    public List<Tag> getAllTags() {
+//        List<Tag> tags = new ArrayList<>();
+//        String sql = "SELECT attractions.attraction_tag.tagID FROM attractions.attraction_tag";
+//        List<Integer> tagIDs = jdbc.query(sql, (rs, rowNum) -> rs.getInt("tagID"));
+//        for (int id : tagIDs) {
+//            tags.add(getTagByID(id));
+//        }
+//        return tags;
+//    }
     public List<Tag> getAllTags() {
-        List<Tag> tags = new ArrayList<>();
-        String sql = "SELECT attractions.attraction_tag.tagID FROM attractions.attraction_tag";
-        List<Integer> tagIDs = jdbc.query(sql, (rs, rowNum) -> rs.getInt("tagID"));
-        for (int id : tagIDs) {
-            tags.add(getTagByID(id));
-        }
+        String sql = "SELECT DISTINCT name FROM attractions.tag";
+        List<Tag> tags = jdbc.query(sql, (rs, rowNum) -> Tag.valueOf(rs.getString("name").toUpperCase()));
         return tags;
     }
+
     public int getTagIDByAttractionID(int attractionID) {
         String sql = "SELECT attractions.attraction_tag.tagID FROM attractions.attraction_tag WHERE attractionID = ?";
         return jdbc.queryForObject(sql, Integer.class, attractionID);
@@ -130,7 +136,7 @@ public class TouristAttractionDAO {
 
     public void updateTags(List<Tag> tags, int attractionID) {
 
-        String sqlDeleteTags = "DELETE FROM attraction.attraction_tag WHERE attraction.attraction_tag.attractionId = ?";
+        String sqlDeleteTags = "DELETE FROM attractions.attraction_tag WHERE attractions.attraction_tag.attractionId = ?";
         jdbc.update(sqlDeleteTags, attractionID);
 
 

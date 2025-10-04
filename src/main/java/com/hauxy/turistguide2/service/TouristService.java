@@ -24,8 +24,17 @@ public class TouristService {
         return touristRepository.getTouristAttractions();
     }
 
+//    public TouristAttraction getAttraction(String name) {
+//        for (TouristAttraction t : getTouristAttractions()) {
+//            if (name.equals(t.getName())) {
+//                return t;
+//            }
+//        }
+//        return null;
+//    }
     public TouristAttraction getAttraction(String name) {
-        for (TouristAttraction t : getTouristAttractions()) {
+        List<TouristAttraction> attractions = touristRepository.getTouristAttractions();
+        for (TouristAttraction t : attractions) {
             if (name.equals(t.getName())) {
                 return t;
             }
