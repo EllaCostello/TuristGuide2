@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 // korrekte, og sætte password til host computerens password.
 // der er ikke taget højde for prod endnu.
 
+// husk password ændring i Env Variables
+
 
 @Repository
 public class TouristRepository {
