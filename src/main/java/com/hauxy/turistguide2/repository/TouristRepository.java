@@ -12,6 +12,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//Før at databasen skal virke, skal vi først oprette en ny database ud fra ER diagrammet i
+//der ligger i en anden branch der hedder "docs-sql-scripts" derudover skal vi linke vores DEV_URL til den
+// korrekte, og sætte password til host computerens password.
+// der er ikke taget højde for prod endnu.
+
+
 @Repository
 public class TouristRepository {
     final List<TouristAttraction> attractions = new ArrayList<>();
@@ -69,17 +75,25 @@ public class TouristRepository {
 
     public List<TouristAttraction> getTouristAttractions() {
         String sql = """
-            SELECT
-            attractionId AS attraction_id,
-            name AS attraction_name,
-            description AS attraction_description,
-            city.name AS city_name,
-            GROUP_CONCAT(tag.name) AS tag_names
+            
+                SELECT
+                attraction.attractionId AS attraction_id,
+                attraction.name AS attraction_name,
+                attraction.description AS attraction_description,
+                city.name AS city_name,
+                GROUP_CONCAT(tag.name) AS tag_names
             FROM attraction
-            JOIN city ON city.cityId = attraction.cityId
-            LEFT JOIN attraction_tag ON attraction.attractionId = attraction_tag.attractionId
-            LEFT JOIN tag ON attraction_tag.tagId = tag.tagId
-            GROUP BY attractionId, name, description, city.name;
+            JOIN city
+                ON city.cityId = attraction.cityID
+            LEFT JOIN attraction_tag
+                ON attraction.attractionId = attraction_tag.attractionId
+            LEFT JOIN tag
+                ON attraction_tag.tagId = tag.tagId
+            GROUP BY
+                attraction.attractionId,
+                attraction.name,
+                attraction.description,
+                city.name;
             """;
 
         return jdbcTemplate.query(sql, attractionRowMapper);
@@ -91,30 +105,58 @@ public class TouristRepository {
 //    }
 
     public void addTouristAttraction(TouristAttraction touristAttraction) {
-        String sqlInsert = """
-                INSERT INTO attractions.attraction (name, description, cityID)
-                VALUES (?, ?, ?)
-                """;
 
         String sqlGetCityID = """
-                SELECT * 
-                FROM attractions.city
-                WHERE name = ?
-               
-                """;
-        int cityID =  jdbcTemplate.queryForObject(
+        SELECT cityId
+        FROM city
+        WHERE name = ?
+    """;
+
+        Integer cityID = jdbcTemplate.queryForObject(
                 sqlGetCityID,
                 new Object[]{touristAttraction.getCity()},
                 Integer.class
         );
 
+        if (cityID == null) {
+            throw new IllegalArgumentException("City not found: " + touristAttraction.getCity());
+        }
+
+
+        String sqlInsertAttraction = """
+        INSERT INTO attraction (name, description, cityID)
+        VALUES (?, ?, ?)
+    """;
+
         jdbcTemplate.update(
-                sqlInsert,
+                sqlInsertAttraction,
                 touristAttraction.getName(),
                 touristAttraction.getDescription(),
                 cityID
         );
+
+
+        Integer attractionID = jdbcTemplate.queryForObject(
+                "SELECT LAST_INSERT_ID()",
+                Integer.class
+        );
+
+
+        if (touristAttraction.getTags() != null && !touristAttraction.getTags().isEmpty()) {
+            String sqlGetTagID = "SELECT tagId FROM tag WHERE name = ?";
+            String sqlInsertAttractionTag = "INSERT INTO attraction_tag (attractionId, tagId) VALUES (?, ?)";
+
+            for (Tag tag : touristAttraction.getTags()) {
+                Integer tagID = jdbcTemplate.queryForObject(
+                        sqlGetTagID,
+                        new Object[]{tag.name()},
+                        Integer.class
+                );
+                jdbcTemplate.update(sqlInsertAttractionTag, attractionID, tagID);
+            }
+        }
     }
+
 
 //    public void updateTouristAttraction(String name, String updateDescription, String city, List<Tag> tags) {
 //        for (TouristAttraction t : getTouristAttractions()) {
@@ -129,82 +171,35 @@ public class TouristRepository {
     public void updateTouristAttraction(String name, String updateDescription, String city, List<Tag> tags) {
 
 
+        String sqlGetCityID = "SELECT cityId FROM city WHERE name = ?";
+        Integer cityID = jdbcTemplate.queryForObject(sqlGetCityID, new Object[]{city}, Integer.class);
 
-        //Find city ID
-        String sqlGetCityID = """
-                SELECT cityId
-                FROM attractions.city
-                WHERE name = ?
-                """;
-
+        if (cityID == null) {
+            throw new IllegalArgumentException("City not found: " + city);
+        }
 
 
-        int cityID = jdbcTemplate.queryForObject(
-                sqlGetCityID,
-                new Object[]{city},
-                Integer.class
-        );
-
-
-
-        // opdater attraction ud efter at have fundet cityID
         String sqlUpdateAttraction = """
-                UPDATE attractions.attraction
-                SET attraction.name = ?, attraction.description = ?, city.id = ?
-                WHERE attraction.name = ?
-                """;
-
-        jdbcTemplate.update(
-                sqlUpdateAttraction,
-                name,
-                updateDescription,
-                cityID
-        );
+        UPDATE attraction
+        SET name = ?, description = ?, cityID = ?
+        WHERE name = ?
+    """;
+        jdbcTemplate.update(sqlUpdateAttraction, name, updateDescription, cityID, name);
 
 
-        // find AttractionID
-        String sqlGetAttractionID = """
-                SELECT attractionID
-                FROM attractions.attraction
-                WHERE attraction.name = ?
-                """;
-
-        int attractionID = jdbcTemplate.queryForObject(
-                sqlGetAttractionID,
-                new Object[]{name},
-                Integer.class
-        );
+        String sqlGetAttractionID = "SELECT attractionId FROM attraction WHERE name = ?";
+        Integer attractionID = jdbcTemplate.queryForObject(sqlGetAttractionID, new Object[]{name}, Integer.class);
 
 
-        //Slet tags der har attractionID
-        String sqlDeleteTags = """
-            DELETE FROM attractions.tag
-            WHERE attractionId = ?
-            """;
-
+        String sqlDeleteTags = "DELETE FROM attraction_tag WHERE attractionId = ?";
         jdbcTemplate.update(sqlDeleteTags, attractionID);
 
 
+        String sqlGetTagID = "SELECT tagId FROM tag WHERE name = ?";
+        String sqlInsertTag = "INSERT INTO attraction_tag (attractionId, tagId) VALUES (?, ?)";
 
-        // Find tagID
-        String sqlGetTagID = """
-                SELECT attractions.tag.tagID
-                FROM attractions.tag
-                WHERE attractions.id = ?            
-                """;
-        int tagID = jdbcTemplate.queryForObject(
-                sqlGetTagID,
-                new Object[]{attractionID},
-                Integer.class
-        );
-
-
-        // Tilføj nye tags med attractionID per tag
-        String sqlInsertTag = """
-            INSERT INTO attractions.attraction_tags (attractionId, tagId)
-            VALUES (?, ?)
-            """;
         for (Tag tag : tags) {
+            Integer tagID = jdbcTemplate.queryForObject(sqlGetTagID, new Object[]{tag.name()}, Integer.class);
             jdbcTemplate.update(sqlInsertTag, attractionID, tagID);
         }
     }
