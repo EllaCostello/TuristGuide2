@@ -266,6 +266,8 @@ public class TouristRepository {
                 FROM attractions.tag
                 WHERE tagID IN ?
                 """;
+
+        // lav videre her
         return tags;
 
     }
