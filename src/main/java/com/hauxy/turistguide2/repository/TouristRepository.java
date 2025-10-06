@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class TouristRepository {
@@ -45,23 +46,22 @@ public class TouristRepository {
 
 
     private final RowMapper<TouristAttraction> attractionRowMapper = (rs, rowNum) -> {
-        TouristAttraction touristAttraction = new TouristAttraction();
-        touristAttraction.setName(rs.getString("attractions.name"));
-        touristAttraction.setDescription(rs.getString("attractions.description"));
-        touristAttraction.setCity(rs.getString("city.name"));
+        TouristAttraction attraction = new TouristAttraction();
+        attraction.setName(rs.getString("attraction_name"));
+        attraction.setDescription(rs.getString("attraction_description"));
+        attraction.setCity(rs.getString("city_name"));
 
-        String tagsString = rs.getString("tags");
-        if (tagsString != null && !tagsString.isEmpty()) {
-            List<Tag> tags = Arrays.stream(tagsString.split(","))
-                    .map(String::trim)
-                    .map(Tag::valueOf)
-                    .toList();
-            touristAttraction.setTags(tags);
-        } else {
-            touristAttraction.setTags(Collections.emptyList());
-        }
+        String tagsString = rs.getString("tag_names");
+        List<Tag> tags = (tagsString == null || tagsString.isEmpty())
+                ? Collections.emptyList()
+                : Arrays.stream(tagsString.split(","))
+                .map(String::trim)
+                .map(String::toUpperCase)
+                .map(Tag::valueOf)
+                .toList();
 
-        return touristAttraction;
+        attraction.setTags(tags);
+        return attraction;
     };
 
 
@@ -69,18 +69,18 @@ public class TouristRepository {
 
     public List<TouristAttraction> getTouristAttractions() {
         String sql = """
-        SELECT 
-            a.attractionId,
-            a.name AS attraction.name,
-            a.description,
-            c.name AS city.name,
-            GROUP_CONCAT(t.name) AS tags
-        FROM attraction a
-        JOIN city c ON c.cityId = a.cityID
-        LEFT JOIN attraction_tag at ON a.attractionId = at.attractionId
-        LEFT JOIN tag t ON at.tagId = t.tagId
-        GROUP BY a.attractionId, a.name, a.description, c.name;
-        """;
+            SELECT
+            attractionId AS attraction_id,
+            name AS attraction_name,
+            description AS attraction_description,
+            city.name AS city_name,
+            GROUP_CONCAT(tag.name) AS tag_names
+            FROM attraction
+            JOIN city ON city.cityId = attraction.cityId
+            LEFT JOIN attraction_tag ON attraction.attractionId = attraction_tag.attractionId
+            LEFT JOIN tag ON attraction_tag.tagId = tag.tagId
+            GROUP BY attractionId, name, description, city.name;
+            """;
 
         return jdbcTemplate.query(sql, attractionRowMapper);
     }
@@ -261,35 +261,82 @@ public class TouristRepository {
                 (rs, rowNum) -> rs.getInt("tagID")
         );
 
+        String inSql = tagIDs.stream()
+                .map(id -> "?")
+                .collect(Collectors.joining(", "));
+
         String sqlGetTagsByID = """
-                SELECT attractions.tag.name
+                SELECT name
                 FROM attractions.tag
-                WHERE tagID IN ?
+                WHERE tagID IN (%s)
                 """;
 
-        // lav videre her
-        return tags;
+        List<String> tagNames = jdbcTemplate.query(
+                sqlGetTagsByID,
+                tagIDs.toArray(),
+                (rs, rowNum) -> rs.getString("name")
+        );
+
+        List<Tag> finishedTags = tagNames.stream()
+                .map(finishedName -> Tag.valueOf(name.toUpperCase()))
+                .collect(Collectors.toList());
+
+
+        return finishedTags;
 
     }
 
 
 
+
+//    public List<Tag> getAllTags() {
+//        return List.of(Tag.values());
+//    }
 
     public List<Tag> getAllTags() {
-        return List.of(Tag.values());
+        String sql = """
+                SELECT name
+                FROM attractions.tag
+                """;
+
+        List<String> tagNames = jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> rs.getString("name")
+        );
+
+        List<Tag> finishedTags = tagNames.stream()
+                .map(finishedName -> Tag.valueOf(finishedName.toUpperCase()))
+                .collect(Collectors.toList());
+
+        return finishedTags;
     }
 
-    public List<String> getAllCities() {
+//    public List<String> getAllCities() {
+//
+//        return new ArrayList<>(
+//                List.of(
+//                        "København",
+//                        "Odense",
+//                        "Aarhus",
+//                        "Aalborg",
+//                        "Kalundborg"
+//                )
+//        );
+//    }
 
-        return new ArrayList<>(
-                List.of(
-                        "København",
-                        "Odense",
-                        "Aarhus",
-                        "Aalborg",
-                        "Kalundborg"
-                )
+    public List<String> getAllCities() {
+        String sql = """
+                SELECT attractions.city.name
+                FROM attractions.city
+                """;
+
+        List<String> cities = jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> rs.getString("name")
         );
+        return cities;
+
+
     }
 
 
