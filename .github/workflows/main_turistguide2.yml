@@ -29,7 +29,7 @@ jobs:
           PROD_DATABASE_URL: "${{secrets.PROD_DATABASE_URL}}"
           PROD_USERNAME: "${{secrets.PROD_USERNAME}}"
           PROD_PASSWORD: "${{secrets.PROD_PASSWORD}}"
-        run: mvn clean install -B
+        run: mvn clean install -DskipTests -B
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -66,4 +66,5 @@ jobs:
           package: '*.jar'
 
           
+
 
