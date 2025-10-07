@@ -1,0 +1,29 @@
+Table attraction {
+  attractionId integer pk
+  name varchar
+  description varchar
+  cityID fk
+}
+
+Table attraction_tag {
+  attractionId  fk pk
+  tagId  fk pk
+
+}
+
+Table city {
+  cityId integer pk
+  name varchar
+}
+
+Table tag {
+  tagId integer pk
+  name varchar
+}
+
+
+Ref: "city"."cityId" < "attraction"."cityID"
+Ref: "attraction"."attractionId" < "attraction_tag"."attractionId"
+Ref: "tag"."tagId" < "attraction_tag"."tagId"
+
+
