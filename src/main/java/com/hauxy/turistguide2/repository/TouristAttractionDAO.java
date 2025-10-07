@@ -56,18 +56,17 @@ public class TouristAttractionDAO {
         jdbc.update(sqlDeleteAttraction, name);
     }
 
-    public int getAttractionIDByName(String name) {
+    public Integer getAttractionIDByName(String name) {
         String sql = "SELECT attractionID FROM attraction WHERE name = ?";
         return jdbc.queryForObject(sql, Integer.class, name);
     }
 
     public String getCityNameByID(int ID) throws SQLException {
         String sqlGetCityByID = "SELECT attractions.city.cityID FROM attractions.city WHERE cityID = ?";
-        String cityName = jdbc.queryForObject(sqlGetCityByID, String.class, ID);
-        return cityName;
+        return jdbc.queryForObject(sqlGetCityByID, String.class, ID);
     }
 
-    public int getCityIDByName(String name) {
+    public Integer getCityIDByName(String name) {
         String sql = "SELECT attractions.city.cityID FROM attractions.city WHERE attractions.city.name = ?";
         return jdbc.queryForObject(sql, Integer.class, name);
     }
@@ -75,6 +74,7 @@ public class TouristAttractionDAO {
     public Tag getTagByID(int tagID) {
         String sql = "SELECT attractions.tag.name FROM attractions.tag WHERE tagID = ?";
         String tagName = jdbc.queryForObject(sql, String.class, tagID);
+        assert tagName != null;
         return Tag.valueOf(tagName.toUpperCase());
     }
 
