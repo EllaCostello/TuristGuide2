@@ -100,5 +100,4 @@ public String addNewAttraction(Model model) {
         return "attractionEdit";
     }
 
-
 }

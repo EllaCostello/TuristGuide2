@@ -11,19 +11,18 @@ import java.util.List;
 public class TouristService {
     final TouristRepository touristRepository;
 
+
     public TouristService(TouristRepository touristRepository) {
         this.touristRepository = touristRepository;
     }
-    public void populateTouristAttraction() {
-        touristRepository.populateTouristAttraction();
-    }
-
     public List<TouristAttraction> getTouristAttractions() {
         return touristRepository.getTouristAttractions();
     }
 
+
     public TouristAttraction getAttraction(String name) {
-        for (TouristAttraction t : getTouristAttractions()) {
+        List<TouristAttraction> attractions = touristRepository.getTouristAttractions();
+        for (TouristAttraction t : attractions) {
             if (name.equals(t.getName())) {
                 return t;
             }
@@ -50,11 +49,6 @@ public class TouristService {
         touristRepository.removeTouristAttraction(name);
     }
 
-
-    public List<Tag> getTagsByName(String name) {
-        return touristRepository.getTagsByName(name);
-    }
-
     public List<Tag> getAllTags() {
         return touristRepository.getAllTags();
     }
@@ -62,8 +56,5 @@ public class TouristService {
     public List<String> getAllCities() {
         return touristRepository.getAllCities();
     }
-
-
-
 
 }

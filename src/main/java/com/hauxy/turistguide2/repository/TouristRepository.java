@@ -2,81 +2,41 @@ package com.hauxy.turistguide2.repository;
 
 import com.hauxy.turistguide2.model.TouristAttraction;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
 public class TouristRepository {
-    final List<TouristAttraction> attractions = new ArrayList<>();
+    private final TouristAttractionDAO dao;
 
-    public TouristRepository() {
-        populateTouristAttraction();
-    }
 
-    public void populateTouristAttraction() {
-        attractions.add(new TouristAttraction("Tivoli", "Verdens ældste tivoli", "København", new ArrayList<>(Arrays.asList(Tag.BØRNEVENLIG, Tag.DYRT, Tag.FORLYSTELSEPARK))));
-        attractions.add(new TouristAttraction("Den Lille Havfrue", "Verdens ældste havfrue", "København", new ArrayList<>(Arrays.asList(Tag.BØRNEVENLIG, Tag.GRATIS, Tag.KUNST))));
-        attractions.add(new TouristAttraction("Operaen", "Verdens ældste opera", "København", new ArrayList<>(Arrays.asList(Tag.DYRT, Tag.KUNST, Tag.KONCERT))));
-
+    public TouristRepository(TouristAttractionDAO dao) {
+        this.dao = dao;
     }
 
     public List<TouristAttraction> getTouristAttractions() {
-        return attractions;
+        return dao.getTouristAttractions();
     }
 
+
     public void addTouristAttraction(TouristAttraction touristAttraction) {
-        attractions.add(touristAttraction);
+        dao.addAttraction(touristAttraction);
     }
 
     public void updateTouristAttraction(String name, String updateDescription, String city, List<Tag> tags) {
-        for (TouristAttraction t : getTouristAttractions()) {
-            if (name.equals(t.getName())) {
-                t.setDescription(updateDescription);
-                t.setCity(city);
-                t.setTags(tags);
-            }
-        }
+        dao.updateTouristAttraction(name, updateDescription, city, tags);
     }
-
 
     public void removeTouristAttraction(String name) {
-        for (TouristAttraction t : attractions) {
-            if (name.equals(t.getName())) {
-                attractions.remove(t);
-                break;
-            }
-        }
+        dao.removeTouristAttraction(name);
     }
 
-
-    public List<Tag> getTagsByName(String name) {
-        for (TouristAttraction t : getTouristAttractions()) {
-            if (name.equals(t.getName())) {
-                return t.getTags();
-            }
-
-        }
-        return null;
-    }
 
     public List<Tag> getAllTags() {
-        return List.of(Tag.values());
+        return dao.getAllTags();
     }
 
     public List<String> getAllCities() {
-
-        return new ArrayList<>(
-                List.of(
-                        "København",
-                        "Odense",
-                        "Aarhus",
-                        "Aalborg",
-                        "Kalundborg"
-                )
-        );
+        return dao.getAllCities();
     }
-
 
 }
